@@ -17,7 +17,8 @@ class ArticleController extends Controller
     public function index()
     {
         // Get articles
-        $articles = Article::paginate(15);
+        // ordenando pelo mais recente
+        $articles = Article::orderby('created_at','desc')->paginate(5);
 
         // Return collection of articles as a resource
         return ArticleResource::collection($articles);
