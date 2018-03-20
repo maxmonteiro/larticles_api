@@ -1072,7 +1072,7 @@ module.exports = function normalizeComponent (
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(11);
-module.exports = __webpack_require__(43);
+module.exports = __webpack_require__(44);
 
 
 /***/ }),
@@ -43251,9 +43251,9 @@ if (false) {
 var disposed = false
 var normalizeComponent = __webpack_require__(9)
 /* script */
-var __vue_script__ = null
+var __vue_script__ = __webpack_require__(42)
 /* template */
-var __vue_template__ = __webpack_require__(42)
+var __vue_template__ = __webpack_require__(43)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -43293,22 +43293,89 @@ module.exports = Component.exports
 
 /***/ }),
 /* 42 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    // criando o objeto de dados
+    return {
+      articles: [], // array que receberá os registros
+      article: { // objeto com os campos q serao alimentados com dados
+        id: '',
+        title: '',
+        body: ''
+      },
+      article_id: '', // variável usada como parâmetro no update, pq é usado o mesmo método para inclusão (store)
+      pagination: {},
+      edit: false // update é false por padrão, pq é usado o mesmo form para inclusão e edição
+    };
+  },
+
+
+  // método para buscar os dados automaticamente ao carregar a página
+  created: function created() {
+    this.fetchArticles(); // o método deve ser definido dentro objeto Methods
+  },
+
+
+  methods: {
+    fetchArticles: function fetchArticles() {
+      var _this = this;
+
+      // usando fetch API
+      fetch('api/articles').then(function (res) {
+        return res.json();
+      }).then(function (res) {
+        //console.log(res.data);
+        // atribuindo os registros no array articles para serem exibidos na tela
+        _this.articles = res.data;
+      });
+    }
+  }
+});
+
+/***/ }),
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    [
+      _c("h2", [_vm._v("Articles")]),
+      _vm._v(" "),
+      _vm._l(_vm.articles, function(article) {
+        return _c(
+          "div",
+          { key: article.id, staticClass: "card card-body mb-2" },
+          [
+            _c("h3", [_vm._v(_vm._s(article.title))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(article.body))])
+          ]
+        )
+      })
+    ],
+    2
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [_c("h2", [_vm._v("Articles")])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -43319,7 +43386,7 @@ if (false) {
 }
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
