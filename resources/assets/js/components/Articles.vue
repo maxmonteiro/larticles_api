@@ -1,6 +1,20 @@
 <template>
   <div>
       <h2>Articles</h2>
+      <!-- FORMULARIO de inclusão -->
+      <!-- evento submit chama a função de adicionar registro -->
+      <form @submit.prevent="addArticle" class="mb-3">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Title"
+          v-model="article.title">
+        </div>
+        <div class="form-group">
+          <textarea type="text" class="form-control" placeholder="Body"
+          v-model="article.body"></textarea>
+        </div>
+        <button type="submit" class="btn btn-light btn-block">Save</button>
+      </form>
+
       <nav aria-label="Page navigation example">
         <!-- fazendo paginação -->
         <ul class="pagination">
@@ -94,6 +108,30 @@
             this.fetchArticles();
           })
           .catch(err => console.log(err));
+        }
+      },
+      
+      addArticle() {
+        // verifica se o form é de inclusão ou edição
+        if (this.edit === false) {
+          // Adiciona
+          fetch('api/article', {
+            method: 'post',
+            body: JSON.stringify(this.article),
+            headers: {
+              'content-type': 'application/json'
+            }
+          })
+          .then(res => res.json())
+          .then(data => {
+            this.article.title = '';
+            this.article.body = '';
+            alert('Article added');
+            this.fetchArticles();
+          })
+          .catch(err => console.log(err));
+        } else {
+          // Atualiza
         }
       }
     }
